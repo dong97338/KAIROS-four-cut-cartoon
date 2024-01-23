@@ -41,13 +41,13 @@ const onUpload = () => {
 	formData.append('negativePrompt', negativePrompt);
   
 	// 서버 엔드포인트에 POST 요청 보내기
-	fetch('https://216.153.54.19:3000/generateImages', {
+	fetch('https://216.153.54.19/generateImages', {
 	  method: 'POST',
 	  body: formData,
 	})
 	.then(response => response.json())
 	.then(data => {
-		const imageUrls = data.imagePaths.map(imagePath => `https://216.153.54.19:3000/image/${imagePath.split('/').pop()}`);
+		const imageUrls = data.imagePaths.map(imagePath => `https://216.153.54.19/image/${imagePath.split('/').pop()}`);
 		console.log(imageUrls);
 		setGeneratedImages(imageUrls);
 	})
