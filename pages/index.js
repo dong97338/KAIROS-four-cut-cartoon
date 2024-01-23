@@ -41,7 +41,7 @@ const onUpload = () => {
 	formData.append('negativePrompt', negativePrompt);
   
 	// 서버 엔드포인트에 POST 요청 보내기
-	fetch('http://216.153.54.19:3389/generateImages', {
+	fetch('https://216.153.54.19:3389/generateImages', {
 	  method: 'POST',
 	  body: formData,
 	})
