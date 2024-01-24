@@ -7,7 +7,7 @@ export default function Home() {
   const [negativePrompt, setNegativePrompt] = useState('(asymmetry, worst quality, low quality, illustration, 3d, 2d, painting, cartoons, sketch), open mouth, grayscale');
   const [generatedImages, setGeneratedImages] = useState([]);
 
-  const [style, setStyle] = useState(''); // 스타일 상태 추가
+  const [style, setStyle] = useState('(No style)'); // 스타일 상태 추가
 
   const [sampleSteps, setSampleSteps] = useState(50);
   const [styleStrength, setStyleStrength] = useState(20);
@@ -80,6 +80,7 @@ const onUpload = () => {
 	files.forEach(file => formData.append('files', file));
 	formData.append('prompt', prompt);
 	formData.append('negativePrompt', negativePrompt);
+	formData.append('style',style);
 
 
 	formData.append('sampleSteps', sampleSteps);
@@ -148,7 +149,6 @@ const onUpload = () => {
 
 		<h1>이미지 생성 옵션</h1>
 	  <select value={style} onChange={(e) => setStyle(e.target.value)}>
-        <option value="">스타일 선택</option>
         <option value="(No style)">(No style)</option>
         <option value="Cinematic">Cinematic</option>
         <option value="Disney Charactor">Disney Charactor</option>
