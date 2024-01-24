@@ -34,32 +34,63 @@ export default function Home() {
 
 // ...
 
+const checkImageStatus = (taskId) => {
+	// 일정 간격으로 상태 확인
+	const intervalId = setInterval(() => {
+	  fetch(`/api/checkStatus/${taskId}`)
+	  .then(response => response.json())
+	  .then(data => {
+		if (data.status === 'complete') {
+		  clearInterval(intervalId);
+		  // 이미지 생성 완료 처리
+		  const imageUrls = data.imagePaths.map(imagePath => `/api/image/${imagePath.split('/').pop()}`);
+		  console.log(imageUrls);
+		  setGeneratedImages(imageUrls);
+		}
+	  })
+	  .catch(error => {
+		console.error('Status check error:', error);
+		clearInterval(intervalId);
+	  });
+	}, 1000); // 예: 5초마다 상태 확인
+  };
+
 const onUpload = () => {
 	const formData = new FormData();
 	files.forEach(file => formData.append('files', file));
 	formData.append('prompt', prompt);
 	formData.append('negativePrompt', negativePrompt);
-	
-	const controller = new AbortController();
-	const timeoutId = setTimeout(() => controller.abort(), 120000); // 120초 후 타임아웃
   
 	// 서버 엔드포인트에 POST 요청 보내기
 	fetch('/api/generateImages', {
-	  method: 'POST',
-	  body: formData,
-	  signal: controller.signal
-	})
-	.then(response => response.json())
-	.then(data => {
-		const imageUrls = data.imagePaths.map(imagePath => `/api/image/${imagePath.split('/').pop()}`);
-		console.log(imageUrls);
-		setGeneratedImages(imageUrls);
-	})
+		method: 'POST',
+		body: formData,
+	  })
+	  .then(response => response.json())
+	  .then(data => {
+		// 여기에서 data는 작업 ID 또는 작업 상태 확인을 위한 정보를 포함
+		const taskId = data.taskId;
+		checkImageStatus(taskId); // 상태 확인 함수 호출
+	  })
+	  .catch(error => {
+		console.error('Error:', error);
+	  });
+	
 
-	.catch(error => {
-	  console.error('Error:', error);
-	})
-	.finally(() => clearTimeout(timeoutId));
+	// fetch('/api/generateImages', {
+	//   method: 'POST',
+	//   body: formData,
+	// })
+	// .then(response => response.json())
+	// .then(data => {
+	// 	const imageUrls = data.imagePaths.map(imagePath => `/api/image/${imagePath.split('/').pop()}`);
+	// 	console.log(imageUrls);
+	// 	setGeneratedImages(imageUrls);
+	// })
+
+	// .catch(error => {
+	//   console.error('Error:', error);
+	// });
   };
 
   return (
