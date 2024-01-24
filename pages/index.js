@@ -3,9 +3,20 @@ import { useState, useRef } from 'react';
 export default function Home() {
   const [files, setFiles] = useState([]);
   const [previews, setPreviews] = useState([]);
-  const [prompt, setPrompt] = useState('');
-  const [negativePrompt, setNegativePrompt] = useState('');
+  const [prompt, setPrompt] = useState('a half-body portrait of a man img wearing the sunglasses in Iron man suit, best quality');
+  const [negativePrompt, setNegativePrompt] = useState('(asymmetry, worst quality, low quality, illustration, 3d, 2d, painting, cartoons, sketch), open mouth, grayscale');
   const [generatedImages, setGeneratedImages] = useState([]);
+
+  const [style, setStyle] = useState(''); // 스타일 상태 추가
+
+  const [sampleSteps, setSampleSteps] = useState(50);
+  const [styleStrength, setStyleStrength] = useState(20);
+  const [brightness, setBrightness] = useState(50); // 밝기 상태 추가
+  const [numberOfOutputImages, setNumberOfOutputImages] = useState(2);
+  const [guidanceScale, setGuidanceScale] = useState(5);
+  const [seed, setSeed] = useState(0);
+  const [randomizeSeed, setRandomizeSeed] = useState(false);
+
   const dropAreaRef = useRef(null);
 
   const onDragOver = (e) => {
@@ -30,6 +41,15 @@ export default function Home() {
     reader.onloadend = () => {
       setPreviews(prevPreviews => [...prevPreviews, reader.result]);
     };
+  };
+  const handleBrightnessChange = (value) => { //밑에 핸들슬라이더체인지는 일반화된 함수
+    // 숫자 범위를 0-100 사이로 제한
+    const newValue = Math.max(0, Math.min(100, value));
+    setBrightness(newValue);
+  };
+
+  const handleSliderChange = (setter) => (e) => {
+    setter(Number(e.target.value));
   };
 
 // ...
@@ -60,6 +80,13 @@ const onUpload = () => {
 	files.forEach(file => formData.append('files', file));
 	formData.append('prompt', prompt);
 	formData.append('negativePrompt', negativePrompt);
+
+
+	formData.append('sampleSteps', sampleSteps);
+    formData.append('styleStrength', styleStrength);
+    formData.append('numberOfOutputImages', numberOfOutputImages);
+    formData.append('guidanceScale', guidanceScale);
+    // formData.append('seed', seed);
   
 	// 서버 엔드포인트에 POST 요청 보내기
 	fetch('/api/generateImages', {
@@ -75,22 +102,6 @@ const onUpload = () => {
 	  .catch(error => {
 		console.error('Error:', error);
 	  });
-	
-
-	// fetch('/api/generateImages', {
-	//   method: 'POST',
-	//   body: formData,
-	// })
-	// .then(response => response.json())
-	// .then(data => {
-	// 	const imageUrls = data.imagePaths.map(imagePath => `/api/image/${imagePath.split('/').pop()}`);
-	// 	console.log(imageUrls);
-	// 	setGeneratedImages(imageUrls);
-	// })
-
-	// .catch(error => {
-	//   console.error('Error:', error);
-	// });
   };
 
   return (
@@ -134,6 +145,91 @@ const onUpload = () => {
       <input type="text" value={prompt} onChange={(e) => setPrompt(e.target.value)} placeholder="프롬프트 입력" />
       <input type="text" value={negativePrompt} onChange={(e) => setNegativePrompt(e.target.value)} placeholder="네거티브 프롬프트 입력" />
       <button onClick={onUpload}>업로드</button>
+
+		<h1>이미지 생성 옵션</h1>
+	  <select value={style} onChange={(e) => setStyle(e.target.value)}>
+        <option value="">스타일 선택</option>
+        <option value="realistic">사실적</option>
+        <option value="cartoon">만화 스타일</option>
+        <option value="abstract">추상적</option>
+        {/* 여기에 더 많은 스타일을 추가할 수 있음 */}
+      </select>
+
+	  <br></br>
+      <label>
+        Number of sample steps:
+        <input
+          type="range"
+          min="1"
+          max="100"
+          value={sampleSteps}
+          onChange={handleSliderChange(setSampleSteps)}
+        />
+        <input
+          type="number"
+          min="1"
+          max="100"
+          value={sampleSteps}
+          onChange={handleSliderChange(setSampleSteps)}
+        />
+      </label>
+	  <br></br>
+
+      <label>
+        Style strength (%):
+        <input
+          type="range"
+          min="0"
+          max="100"
+          value={styleStrength}
+          onChange={handleSliderChange(setStyleStrength)}
+        />
+        <input
+          type="number"
+          min="0"
+          max="100"
+          value={styleStrength}
+          onChange={handleSliderChange(setStyleStrength)}
+        />
+      </label>
+	  <br></br>
+
+      <label>
+        Number of output images:
+        <input
+          type="range"
+          min="1"
+          max="4"
+          value={numberOfOutputImages}
+          onChange={handleSliderChange(setNumberOfOutputImages)}
+        />
+        <input
+          type="number"
+          min="1"
+          max="4"
+          value={numberOfOutputImages}
+          onChange={handleSliderChange(setNumberOfOutputImages)}
+        />
+      </label>
+	  <br></br>
+	  <label>
+        Guidance scale:
+        <input
+          type="range"
+          min="1"
+          max="10"
+          value={guidanceScale}
+          onChange={handleSliderChange(setGuidanceScale)}
+		  />
+		          <input
+          type="number"
+          min="1"
+          max="10"
+          value={guidanceScale}
+          onChange={handleSliderChange(setGuidanceScale)}
+        />
+		  </label>
+		  <br></br> 
 
       {/* 생성된 이미지 표시 */}
 	  {console.log(generatedImages)}
