@@ -149,9 +149,17 @@ const onUpload = () => {
 		<h1>이미지 생성 옵션</h1>
 	  <select value={style} onChange={(e) => setStyle(e.target.value)}>
         <option value="">스타일 선택</option>
-        <option value="realistic">사실적</option>
-        <option value="cartoon">만화 스타일</option>
-        <option value="abstract">추상적</option>
+        <option value="(No style)">(No style)</option>
+        <option value="Cinematic">Cinematic</option>
+        <option value="Disney Charactor">Disney Charactor</option>
+		<option value="Digital Art">Digital Art</option>
+		<option value="Fantasy art">Fantasy art</option>
+		<option value="Neonpunk">Neonpunk</option>
+		<option value="Enhance">Enhance</option>
+		<option value="Comic book">Comic book</option>
+		<option value="Lowpoly">Lowpoly</option>
+		<option value="Line art">Line art</option>
+
         {/* 여기에 더 많은 스타일을 추가할 수 있음 */}
       </select>
 
