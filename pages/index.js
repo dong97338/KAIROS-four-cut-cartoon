@@ -39,11 +39,15 @@ const onUpload = () => {
 	files.forEach(file => formData.append('files', file));
 	formData.append('prompt', prompt);
 	formData.append('negativePrompt', negativePrompt);
+	
+	const controller = new AbortController();
+	const timeoutId = setTimeout(() => controller.abort(), 120000); // 120초 후 타임아웃
   
 	// 서버 엔드포인트에 POST 요청 보내기
 	fetch('/api/generateImages', {
 	  method: 'POST',
 	  body: formData,
+	  signal: controller.signal
 	})
 	.then(response => response.json())
 	.then(data => {
@@ -54,7 +58,8 @@ const onUpload = () => {
 
 	.catch(error => {
 	  console.error('Error:', error);
-	});
+	})
+	.finally(() => clearTimeout(timeoutId));
   };
 
   return (
