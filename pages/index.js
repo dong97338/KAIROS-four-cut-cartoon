@@ -20,7 +20,7 @@ export default function Home() {
   const [queueStatus, setQueueStatus] = useState(0); // 대기열 상태 추가
   const [isLoading, setIsLoading] = useState(false);    // 로딩 상태 추가
 
-  const [taskId, setTaskId] = useState(-1); // taskId를 전역 상태로 설정
+  const [taskId, setTaskId] = useState(0); // taskId를 전역 상태로 설정
 
 
   const dropAreaRef = useRef(null);
@@ -74,7 +74,7 @@ const checkImageStatus = () => {
 			const imageUrls = data.imagePaths.map(imagePath => `/api/image/${imagePath.replaceAll('/','+')}`);
 			console.log(imageUrls);
 			setGeneratedImages(imageUrls);
-			setTaskId(-1)
+			setTaskId(0)
 		}
 		if (+data.status === 1){
 			setIsLoading(true);  
