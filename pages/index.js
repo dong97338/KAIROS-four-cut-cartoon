@@ -20,7 +20,7 @@ export default function Home() {
   const [queueStatus, setQueueStatus] = useState(0); // 대기열 상태 추가
   const [isLoading, setIsLoading] = useState(false);    // 로딩 상태 추가
 
-  taskId = 0; // taskId를 전역 상태로 설정
+  let taskId = 0; // taskId를 전역 상태로 설정
 
 
   const dropAreaRef = useRef(null);
