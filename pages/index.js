@@ -63,7 +63,7 @@ const checkImageStatus = (taskId) => {
 		if (data.status === 'complete') {
 		  clearInterval(intervalId);
 		  // 이미지 생성 완료 처리
-		  const imageUrls = data.imagePaths.map(imagePath => `/api/image/${imagePath.split('/').pop()}`);
+		  const imageUrls = data.imagePaths.map(imagePath => `/api/image/${imagePath}`);
 		  console.log(imageUrls);
 		  setGeneratedImages(imageUrls);
 		}
