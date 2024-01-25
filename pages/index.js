@@ -113,7 +113,7 @@ const onUpload = () => {
 	  .then(response => response.json())
 	  .then(data => {
 		// 여기에서 data는 작업 ID 또는 작업 상태 확인을 위한 정보를 포함
-		setTaskId(data.taskId);
+		setTaskId(+data.taskId);
 		// checkImageStatus(taskId); // 상태 확인 함수 호출
 	  })
 	  .catch(error => {
