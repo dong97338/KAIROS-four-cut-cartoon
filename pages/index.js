@@ -61,6 +61,7 @@ export default function Home() {
 // ...
 
 const checkImageStatus = () => {
+		console.log('checkimagestatus',taskId)
 	// 일정 간격으로 상태 확인
 	  fetch(`/api/checkStatus/${taskId}`)
 	  .then(response => response.json())
