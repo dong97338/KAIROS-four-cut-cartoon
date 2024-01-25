@@ -20,6 +20,9 @@ export default function Home() {
   const [queueStatus, setQueueStatus] = useState(0); // 대기열 상태 추가
   const [isLoading, setIsLoading] = useState(false);    // 로딩 상태 추가
 
+  const [taskId, setTaskId] = useState(-1); // taskId를 전역 상태로 설정
+
+
   const dropAreaRef = useRef(null);
 
   const onDragOver = (e) => {
@@ -57,20 +60,19 @@ export default function Home() {
 
 // ...
 
-const checkImageStatus = (taskId) => {
+const checkImageStatus = () => {
 	// 일정 간격으로 상태 확인
-	const intervalId = setInterval(() => {
 	  fetch(`/api/checkStatus/${taskId}`)
 	  .then(response => response.json())
 	  .then(data => {
 		console.log(+data.status);
-		setQueueStatus(+data.status);
+		setQueueStatus(+data.status);  //큐 개수
 		if (+data.status === 0) {
-			clearInterval(intervalId);
 			// 이미지 생성 완료 처리
 			const imageUrls = data.imagePaths.map(imagePath => `/api/image/${imagePath.replaceAll('/','+')}`);
 			console.log(imageUrls);
 			setGeneratedImages(imageUrls);
+			setTaskId(-1)
 		}
 		if (+data.status === 1){
 			setIsLoading(true);  
@@ -80,10 +82,14 @@ const checkImageStatus = (taskId) => {
 	  })
 	  .catch(error => {
 		console.error('Status check error:', error);
-		clearInterval(intervalId);
-	  });
-	}, 1000); // 예: 5초마다 상태 확인
+	  })
   };
+  useEffect(() => {
+    checkQueueStatus();
+    const intervalId = setInterval(checkImageStatus, 1000); // 1초마다 대기열 상태를 확인
+
+    return () => clearInterval(intervalId); // 컴포넌트 언마운트 시 인터벌 정리
+  }, []);
 
 const onUpload = () => {
 	const formData = new FormData();
@@ -107,8 +113,8 @@ const onUpload = () => {
 	  .then(response => response.json())
 	  .then(data => {
 		// 여기에서 data는 작업 ID 또는 작업 상태 확인을 위한 정보를 포함
-		const taskId = data.taskId;
-		checkImageStatus(taskId); // 상태 확인 함수 호출
+		setTaskId(data.taskId);
+		// checkImageStatus(taskId); // 상태 확인 함수 호출
 	  })
 	  .catch(error => {
 		console.error('Error:', error);
