@@ -67,7 +67,7 @@ const checkImageStatus = () => {
 	  .then(data => {
 		console.log(+data.status);
 		setQueueStatus(+data.status);  //큐 개수
-		if (+data.status === 0) {
+		if (+data.status === 0 && taskId >= 0) {
 			// 이미지 생성 완료 처리
 			const imageUrls = data.imagePaths.map(imagePath => `/api/image/${imagePath.replaceAll('/','+')}`);
 			console.log(imageUrls);
