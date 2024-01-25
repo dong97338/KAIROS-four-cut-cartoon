@@ -63,6 +63,7 @@ const checkImageStatus = (taskId) => {
 	  fetch(`/api/checkStatus/${taskId}`)
 	  .then(response => response.json())
 	  .then(data => {
+		console.log(+data.status);
 		setQueueStatus(+data.status);
 		if (+data.status === 0) {
 			clearInterval(intervalId);
