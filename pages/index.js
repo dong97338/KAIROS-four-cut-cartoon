@@ -17,6 +17,9 @@ export default function Home() {
   const [seed, setSeed] = useState(0);
   const [randomizeSeed, setRandomizeSeed] = useState(false);
 
+  const [queueStatus, setQueueStatus] = useState(0); // 대기열 상태 추가
+  const [isLoading, setIsLoading] = useState(false);    // 로딩 상태 추가
+
   const dropAreaRef = useRef(null);
 
   const onDragOver = (e) => {
@@ -60,12 +63,18 @@ const checkImageStatus = (taskId) => {
 	  fetch(`/api/checkStatus/${taskId}`)
 	  .then(response => response.json())
 	  .then(data => {
-		if (data.status === 'complete') {
-		  clearInterval(intervalId);
-		  // 이미지 생성 완료 처리
-		  const imageUrls = data.imagePaths.map(imagePath => `/api/image/${imagePath.replaceAll('/','+')}`);
-		  console.log(imageUrls);
-		  setGeneratedImages(imageUrls);
+		setQueueStatus(+data.status);
+		if (+data.status === 0) {
+			clearInterval(intervalId);
+			// 이미지 생성 완료 처리
+			const imageUrls = data.imagePaths.map(imagePath => `/api/image/${imagePath.replaceAll('/','+')}`);
+			console.log(imageUrls);
+			setGeneratedImages(imageUrls);
+		}
+		if (+data.status === 1){
+			setIsLoading(true);  
+		} else {
+			setIsLoading(false); 
 		}
 	  })
 	  .catch(error => {
@@ -238,6 +247,12 @@ const onUpload = () => {
         />
 		  </label>
 		  <br></br> 
+		  {isLoading && <img src="https://media.giphy.com/media/uIJBFZoOaifHf52MER/giphy.gif" alt="Loading" />} {/* 로딩 GIF 표시 */}
+		  <br></br> 
+
+      {<p>대기열: {queueStatus}</p>} {/* 대기열 번호 표시 */}
+	  <br></br> 
+
 
       {/* 생성된 이미지 표시 */}
 	  {console.log(generatedImages)}
