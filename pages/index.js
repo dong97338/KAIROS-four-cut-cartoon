@@ -20,7 +20,7 @@ export default function Home() {
   const [queueStatus, setQueueStatus] = useState(0); // 대기열 상태 추가
   const [isLoading, setIsLoading] = useState(false);    // 로딩 상태 추가
 
-  let taskId = 0; // taskId를 전역 상태로 설정
+  const [taskId, setTaskId] = useState(-1); // taskId를 전역 상태로 설정
 
 
   const dropAreaRef = useRef(null);
@@ -61,7 +61,8 @@ export default function Home() {
 // ...
 
 const checkImageStatus = () => {
-		console.log(`checkImageStatus: ${taskId}`)
+	console.log(`checkImageStatus: ${taskId}`)
+
 	// 일정 간격으로 상태 확인
 	  fetch(`/api/checkStatus/${taskId}`)
 	  .then(response => response.json())
@@ -73,7 +74,7 @@ const checkImageStatus = () => {
 			const imageUrls = data.imagePaths.map(imagePath => `/api/image/${imagePath.replaceAll('/','+')}`);
 			console.log(imageUrls);
 			setGeneratedImages(imageUrls);
-			taskId=0
+			setTaskId(-1)
 		}
 		if (+data.status === 1){
 			setIsLoading(true);  
@@ -114,8 +115,7 @@ const onUpload = () => {
 	  .then(response => response.json())
 	  .then(data => {
 		// 여기에서 data는 작업 ID 또는 작업 상태 확인을 위한 정보를 포함
-		taskId=+data.taskId;
-		console.log(taskId, +data.taskId)
+		setTaskId(+data.taskId);
 		// checkImageStatus(taskId); // 상태 확인 함수 호출
 	  })
 	  .catch(error => {
