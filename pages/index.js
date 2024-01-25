@@ -85,7 +85,7 @@ const checkImageStatus = () => {
 	  })
   };
   useEffect(() => {
-    checkQueueStatus();
+    checkImageStatus();
     const intervalId = setInterval(checkImageStatus, 1000); // 1초마다 대기열 상태를 확인
 
     return () => clearInterval(intervalId); // 컴포넌트 언마운트 시 인터벌 정리
