@@ -256,7 +256,7 @@ const onUpload = () => {
         />
 		  </label>
 		  <br></br> 
-		  {taskId>=0 && isLoading && <img src="https://media.giphy.com/media/uIJBFZoOaifHf52MER/giphy.gif" alt="Loading" />} {/* 로딩 GIF 표시 */}
+		  {taskId>0 && isLoading && <img src="https://media.giphy.com/media/uIJBFZoOaifHf52MER/giphy.gif" alt="Loading" />} {/* 로딩 GIF 표시 */}
 		  <br></br> 
 
       {<p>대기열: {queueStatus}</p>} {/* 대기열 번호 표시 */}
