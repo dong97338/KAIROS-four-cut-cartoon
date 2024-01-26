@@ -1,6 +1,6 @@
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-# 카이로스 동화네컷
+# KAIROS 동화네컷
 ## Service Needs 기획 의도
 ## Features 기능
 ## How to Install 설치 방법
