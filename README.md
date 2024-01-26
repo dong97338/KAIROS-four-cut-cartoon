@@ -4,6 +4,20 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 ## Service Needs 기획 의도
 ## Features 기능
 ## How to Install 설치 방법
+### 프론트엔드
+1. Repository 다운로드
+2. 사전 설정
+3. 빌드 및 실행
+4. 주의사항
+5. 테스트 계정 ID : `user1`   
+    테스트 계정 PW : `test` 
+### 백엔드
+1. Repository 다운로드
+2. 사전 설정
+3. 빌드 및 실행
+4. 주의사항
+5. 테스트 계정 ID : `user1`   
+    테스트 계정 PW : `test` 
 ## Getting Started 튜토리얼
 ## Technique Used 기술 스택
 ## Team Info 팀 정보
