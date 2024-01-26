@@ -1,6 +1,14 @@
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-## 카이로스 동화네컷
+# 카이로스 동화네컷
+## Service Needs 기획 의도
+## Features 기능
+## How to Install 설치 방법
+## Getting Started 튜토리얼
+## Technique Used 기술 스택
+## Team Info 팀 정보
+## License 저작권 및 사용권
+
 
 First, run the development server:
 

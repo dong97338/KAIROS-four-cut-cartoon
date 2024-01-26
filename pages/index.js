@@ -64,7 +64,7 @@ const checkImageStatus = () => {
 	console.log(`checkImageStatus: ${taskId}`)
 
 	// 일정 간격으로 상태 확인
-	  fetch(`/api/checkStatus/${taskId}`)
+	  fetch(`/api/checkStatus/${taskId}`) //여기서 taskId
 	  .then(response => response.json())
 	  .then(data => {
 		console.log(+data.status);
