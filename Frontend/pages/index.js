@@ -25,6 +25,16 @@ export default function Home() {
 
   const dropAreaRef = useRef(null);
 
+  if (process.env.NODE_ENV === 'development') {
+    console.log('Running in development mode');
+    // 로컬 개발 환경에서 실행 중인 경우의 코드
+} else {
+    console.log('Running in production mode');
+    // 프로덕션 환경에서 실행 중인 경우의 코드
+}
+  const url = (endpoint) => `${process.env.NODE_ENV == 'development'?'http://localhost:8080':''}/api/${endpoint}`;
+
+
   const onDragOver = (e) => {
     e.preventDefault();
   };
@@ -64,14 +74,14 @@ const checkImageStatus = () => {
 	console.log(`checkImageStatus: ${taskId}`)
 
 	// 일정 간격으로 상태 확인
-	  fetch(`/api/checkStatus/${taskId}`) //여기서 taskId
+	  fetch(url(`checkStatus/${taskId}`)) //여기서 taskId
 	  .then(response => response.json())
 	  .then(data => {
 		console.log(+data.status);
 		setQueueStatus(+data.status);  //큐 개수
 		if (+data.status === 0 && taskId > 0) {
 			// 이미지 생성 완료 처리
-			const imageUrls = data.imagePaths.map(imagePath => `/api/image/${imagePath.replaceAll('/','+')}`);
+			const imageUrls = data.imagePaths.map(imagePath => url(`image/${imagePath.replaceAll('/','+')}`));
 			console.log(imageUrls);
 			setGeneratedImages(imageUrls);
 			setTaskId(0)
@@ -108,7 +118,7 @@ const onUpload = () => {
     // formData.append('seed', seed);
   
 	// 서버 엔드포인트에 POST 요청 보내기
-	fetch('/api/generateImages', {
+	fetch(url('generateImages'), {
 		method: 'POST',
 		body: formData,
 	  })
