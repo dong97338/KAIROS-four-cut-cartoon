@@ -21,7 +21,7 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 ## Getting Started 튜토리얼
 ## Technique Used 기술 스택
 ## Team Info 팀 정보
-| 이름 | 역할 | 이메일 | [[GitHub MOC\|깃허브]] ID |
+| 이름 | 역할 | 이메일 | 깃허브 ID |
 | ---- | ---- | ---- | ---- |
 | 김경용 |  | kgydragon0328@naver.com | <a href="https://github.com/kykim0328" target="_blank"><img src="https://img.shields.io/badge/kykim0328-181717?style=flat-square&logo=github&logoColor=white"/></a> |
 | 김원 |  |  |  |
