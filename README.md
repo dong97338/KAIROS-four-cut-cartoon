@@ -20,6 +20,29 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
     테스트 계정 PW : `test` 
 ## Getting Started 튜토리얼
 ## Technique Used 기술 스택
+### 기획, UI/UX
+
+- `Figma`
+
+### Backend
+
+- `Node.js` + `Express`
+- `Pytorch`
+
+### Frontend
+
+- `React`
+- `Next.js`
+- `tailwindCSS`
+
+### AI(Machine Learning)
+
+- `Pytorch`
+
+### CI/CD
+
+- `Git`
+
 ## Team Info 팀 정보
 | 이름 | 역할 | 이메일 | 깃허브 ID |
 | ---- | ---- | ---- | ---- |
