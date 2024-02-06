@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 
-export default function Home() {
+export default () => {
   const [files, setFiles] = useState([]);
   const [previews, setPreviews] = useState([]);
   const [prompt, setPrompt] = useState('a half-body portrait of a man img wearing the sunglasses in Iron man suit, best quality');
@@ -12,10 +12,27 @@ export default function Home() {
   const [sampleSteps, setSampleSteps] = useState(50);
   const [styleStrength, setStyleStrength] = useState(20);
   const [brightness, setBrightness] = useState(50); // 밝기 상태 추가
-  const [numberOfOutputImages, setNumberOfOutputImages] = useState(2);
+  const [numberOfOutputImages, setNumberOfOutputImages] = useState(1);
   const [guidanceScale, setGuidanceScale] = useState(5);
   const [seed, setSeed] = useState(0);
   const [randomizeSeed, setRandomizeSeed] = useState(false);
+
+  const [settings, setSettings] = useState([
+    { name: 'sampleSteps', value: 50 },
+    { name: 'styleStrength', value: 20 },
+    { name: 'brightness', value: 50 },
+    { name: 'numberOfOutputImages', value: 1 },
+    { name: 'guidanceScale', value: 5 },
+    { name: 'seed', value: 0 },
+    { name: 'randomizeSeed', value: false },
+  ]);
+
+  const updateSetting = (name, newValue) => {
+    setSettings(settings.map(setting =>
+        setting.name === name ? { ...setting, value: newValue } : setting
+      )
+    );
+  };
 
   const [queueStatus, setQueueStatus] = useState(0); // 대기열 상태 추가
   const [isLoading, setIsLoading] = useState(false);    // 로딩 상태 추가
@@ -28,11 +45,11 @@ export default function Home() {
   if (process.env.NODE_ENV === 'development') {
     console.log('Running in development mode');
     // 로컬 개발 환경에서 실행 중인 경우의 코드
-} else {
+  } else {
     console.log('Running in production mode');
     // 프로덕션 환경에서 실행 중인 경우의 코드
-}
-  const url = (endpoint) => `${process.env.NODE_ENV == 'development'?'http://localhost:8080':''}/api/${endpoint}`;
+  }
+  const url = (endpoint) => `${process.env.NODE_ENV == 'development' ? 'http://216.153.57.204:8080' : ''}/api/${endpoint}`;
 
 
   const onDragOver = (e) => {
@@ -68,33 +85,33 @@ export default function Home() {
     setter(Number(e.target.value));
   };
 
-// ...
+  // ...
 
-const checkImageStatus = () => {
-	console.log(`checkImageStatus: ${taskId}`)
+  const checkImageStatus = () => {
+    console.log(`checkImageStatus: ${taskId}`)
 
-	// 일정 간격으로 상태 확인
-	  fetch(url(`checkStatus/${taskId}`)) //여기서 taskId
-	  .then(response => response.json())
-	  .then(data => {
-		console.log(+data.status);
-		setQueueStatus(+data.status);  //큐 개수
-		if (+data.status === 0 && taskId > 0) {
-			// 이미지 생성 완료 처리
-			const imageUrls = data.imagePaths.map(imagePath => url(`image/${imagePath.replaceAll('/','+')}`));
-			console.log(imageUrls);
-			setGeneratedImages(imageUrls);
-			setTaskId(0)
-		}
-		if (+data.status === 1){
-			setIsLoading(true);  
-		} else {
-			setIsLoading(false); 
-		}
-	  })
-	  .catch(error => {
-		console.error('Status check error:', error);
-	  })
+    // 일정 간격으로 상태 확인
+    fetch(url(`checkStatus/${taskId}`)) //여기서 taskId
+      .then(response => response.json())
+      .then(data => {
+        console.log(+data.status);
+        setQueueStatus(+data.status);  //큐 개수
+        if (+data.status === 0 && taskId > 0) {
+          // 이미지 생성 완료 처리
+          const imageUrls = data.imagePaths.map(imagePath => url(`image/${imagePath.replaceAll('/', '+')}`));
+          console.log(imageUrls);
+          setGeneratedImages(imageUrls);
+          setTaskId(0)
+        }
+        if (+data.status === 1) {
+          setIsLoading(true);
+        } else {
+          setIsLoading(false);
+        }
+      })
+      .catch(error => {
+        console.error('Status check error:', error);
+      })
   };
   useEffect(() => {
     checkImageStatus();
@@ -103,34 +120,34 @@ const checkImageStatus = () => {
     return () => clearInterval(intervalId); // 컴포넌트 언마운트 시 인터벌 정리
   }, [taskId]);
 
-const onUpload = () => {
-	const formData = new FormData();
-	files.forEach(file => formData.append('files', file));
-	formData.append('prompt', prompt);
-	formData.append('negativePrompt', negativePrompt);
-	formData.append('style',style);
+  const onUpload = () => {
+    const formData = new FormData();
+    files.forEach(file => formData.append('files', file));
+    formData.append('prompt', prompt);
+    formData.append('negativePrompt', negativePrompt);
+    formData.append('style', style);
 
 
-	formData.append('sampleSteps', sampleSteps);
+    formData.append('sampleSteps', sampleSteps);
     formData.append('styleStrength', styleStrength);
     formData.append('numberOfOutputImages', numberOfOutputImages);
     formData.append('guidanceScale', guidanceScale);
     // formData.append('seed', seed);
-  
-	// 서버 엔드포인트에 POST 요청 보내기
-	fetch(url('generateImages'), {
-		method: 'POST',
-		body: formData,
-	  })
-	  .then(response => response.json())
-	  .then(data => {
-		// 여기에서 data는 작업 ID 또는 작업 상태 확인을 위한 정보를 포함
-		setTaskId(+data.taskId);
-		// checkImageStatus(taskId); // 상태 확인 함수 호출
-	  })
-	  .catch(error => {
-		console.error('Error:', error);
-	  });
+
+    // 서버 엔드포인트에 POST 요청 보내기
+    fetch(url('generateImages/0'), {
+      method: 'POST',
+      body: formData,
+    })
+      .then(response => response.json())
+      .then(data => {
+        // 여기에서 data는 작업 ID 또는 작업 상태 확인을 위한 정보를 포함
+        setTaskId(+data.taskId);
+        // checkImageStatus(taskId); // 상태 확인 함수 호출
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
   };
 
   return (
@@ -171,27 +188,20 @@ const onUpload = () => {
         ))}
         {!previews.length && "여기에 파일을 드래그하세요"}
       </div>
-      <input type="text" value={prompt} onChange={(e) => setPrompt(e.target.value)} placeholder="프롬프트 입력" />
-      <input type="text" value={negativePrompt} onChange={(e) => setNegativePrompt(e.target.value)} placeholder="네거티브 프롬프트 입력" />
+      <h2>프롬프트</h2>
+      <textarea type="text" value={prompt} onChange={(e) => setPrompt(e.target.value)} style={{width: "300px", height: "100px", resize: "none"}} placeholder="프롬프트 입력" />
+      <h2>네거티브 프롬프트</h2>
+      <textarea type="text" value={negativePrompt} onChange={(e) => setNegativePrompt(e.target.value)} style={{width: "300px", height: "100px", resize: "none"}} placeholder="네거티브 프롬프트 입력" />
       <button onClick={onUpload}>업로드</button>
 
-		<h1>이미지 생성 옵션</h1>
-	  <select value={style} onChange={(e) => setStyle(e.target.value)}>
-        <option value="(No style)">(No style)</option>
-        <option value="Cinematic">Cinematic</option>
-        <option value="Disney Charactor">Disney Charactor</option>
-		<option value="Digital Art">Digital Art</option>
-		<option value="Fantasy art">Fantasy art</option>
-		<option value="Neonpunk">Neonpunk</option>
-		<option value="Enhance">Enhance</option>
-		<option value="Comic book">Comic book</option>
-		<option value="Lowpoly">Lowpoly</option>
-		<option value="Line art">Line art</option>
-
-        {/* 여기에 더 많은 스타일을 추가할 수 있음 */}
+      <h2>옵션</h2>
+      <select value={style} onChange={(e) => setStyle(e.target.value)}>
+        {["(No style)", "Cinematic", "Disney Character", "Digital Art", "Fantasy art", "Neonpunk", "Enhance", "Comic book", "Lowpoly", "Line art"].map((style, index) => (
+          <option key={index} value={style}>{style}</option>
+        ))}
       </select>
 
-	  <br></br>
+      <br></br>
       <label>
         Number of sample steps:
         <input
@@ -209,7 +219,7 @@ const onUpload = () => {
           onChange={handleSliderChange(setSampleSteps)}
         />
       </label>
-	  <br></br>
+      <br></br>
 
       <label>
         Style strength (%):
@@ -228,7 +238,7 @@ const onUpload = () => {
           onChange={handleSliderChange(setStyleStrength)}
         />
       </label>
-	  <br></br>
+      <br></br>
 
       <label>
         Number of output images:
@@ -247,8 +257,8 @@ const onUpload = () => {
           onChange={handleSliderChange(setNumberOfOutputImages)}
         />
       </label>
-	  <br></br>
-	  <label>
+      <br></br>
+      <label>
         Guidance scale:
         <input
           type="range"
@@ -256,25 +266,25 @@ const onUpload = () => {
           max="10"
           value={guidanceScale}
           onChange={handleSliderChange(setGuidanceScale)}
-		  />
-		          <input
+        />
+        <input
           type="number"
           min="1"
           max="10"
           value={guidanceScale}
           onChange={handleSliderChange(setGuidanceScale)}
         />
-		  </label>
-		  <br></br> 
-		  {taskId>0 && isLoading && <img src="https://media.giphy.com/media/uIJBFZoOaifHf52MER/giphy.gif" alt="Loading" />} {/* 로딩 GIF 표시 */}
-		  <br></br> 
+      </label>
+      <br></br>
+      {taskId > 0 && isLoading && <img src="https://media.giphy.com/media/uIJBFZoOaifHf52MER/giphy.gif" alt="Loading" />} {/* 로딩 GIF 표시 */}
+      <br></br>
 
       {<p>대기열: {queueStatus}</p>} {/* 대기열 번호 표시 */}
-	  <br></br> 
+      <br></br>
 
 
       {/* 생성된 이미지 표시 */}
-	  {console.log(generatedImages)}
+      {console.log(generatedImages)}
       {generatedImages.length > 0 && (
         <div>
           <h2>생성된 이미지</h2>
