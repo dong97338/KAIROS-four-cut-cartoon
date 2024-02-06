@@ -14,7 +14,7 @@ export default () => {
   const [brightness, setBrightness] = useState(50); // 밝기 상태 추가
   const [numberOfOutputImages, setNumberOfOutputImages] = useState(1);
   const [guidanceScale, setGuidanceScale] = useState(5);
-  const [seed, setSeed] = useState(0);
+  const [seed, setSeed] = useState(1);
   const [randomizeSeed, setRandomizeSeed] = useState(false);
 
   const [settings, setSettings] = useState([
@@ -274,6 +274,24 @@ export default () => {
           max="10"
           value={guidanceScale}
           onChange={handleSliderChange(setGuidanceScale)}
+        />
+      </label>
+      <br></br>
+      <label>
+        Seed:
+        <input
+          type="range"
+          min="1"
+          max="10"
+          value={seed}
+          onChange={handleSliderChange(setSeed)}
+        />
+        <input
+          type="number"
+          min="1"
+          max="10"
+          value={seed}
+          onChange={handleSliderChange(setSeed)}
         />
       </label>
       <br></br>
