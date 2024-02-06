@@ -132,6 +132,7 @@ export default () => {
     formData.append('styleStrength', styleStrength);
     formData.append('numberOfOutputImages', numberOfOutputImages);
     formData.append('guidanceScale', guidanceScale);
+    formData.append('seed', seed);
     // formData.append('seed', seed);
 
     // 서버 엔드포인트에 POST 요청 보내기
