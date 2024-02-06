@@ -152,7 +152,8 @@ export default () => {
 
   return (
     <div>
-      <h1>이미지 업로드</h1>
+      <h1>Photomaker-style</h1>
+      <h2>이미지 업로드</h2>
       <div
         ref={dropAreaRef}
         onDragOver={onDragOver}
