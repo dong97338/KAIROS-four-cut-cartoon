@@ -43,15 +43,15 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 ## Team Info 팀 정보
 | 이름 | 역할 | 이메일 | 깃허브 ID |
 | ---- | ---- | ---- | ---- |
-| 김경용 |  | kgydragon0328@naver.com | <a href="https://github.com/kykim0328" target="_blank"><img src="https://img.shields.io/badge/kykim0328-181717?style=flat-square&logo=github&logoColor=white"/></a> |
-| 김원 |  |  |  |
-| 무누 |  | muug0712@gmail.com |  |
-| 민지성 |  | flging@naver.com | <a href="https://github.com/flging" target="_blank"><img src="https://img.shields.io/badge/flging-181717?style=flat-square&logo=github&logoColor=white"/></a> |
-| 부형준 |  |  |  |
-| 손채환 |  | coghks0426@gmail.com | <a href="https://github.com/son426" target="_blank"><img src="https://img.shields.io/badge/son426-181717?style=flat-square&logo=github&logoColor=white"/></a> |
-| 윤건재 |  | gunjae.youn@gmail.com | <a href="https://github.com/gunjaeyoun" target="_blank"><img src="https://img.shields.io/badge/gunjaeyoun-181717?style=flat-square&logo=github&logoColor=white"/></a> |
+| 김경용 | Prompt Engineering | kgydragon0328@naver.com | <a href="https://github.com/kykim0328" target="_blank"><img src="https://img.shields.io/badge/kykim0328-181717?style=flat-square&logo=github&logoColor=white"/></a> |
+| 김원 | Prompt Engineering |  |  |
+| 무누 | Prompt Engineering | muug0712@gmail.com |  |
+| 민지성 | Frontend/Prompt Engineering | flging@naver.com | <a href="https://github.com/flging" target="_blank"><img src="https://img.shields.io/badge/flging-181717?style=flat-square&logo=github&logoColor=white"/></a> |
+| 부형준 | Backend |  |  |
+| 손채환 | Frontend | coghks0426@gmail.com | <a href="https://github.com/son426" target="_blank"><img src="https://img.shields.io/badge/son426-181717?style=flat-square&logo=github&logoColor=white"/></a> |
+| 윤건재 | 기획/Prompt Engineering | gunjae.youn@gmail.com | <a href="https://github.com/gunjaeyoun" target="_blank"><img src="https://img.shields.io/badge/gunjaeyoun-181717?style=flat-square&logo=github&logoColor=white"/></a> |
 | 이동현 | Frontend, Backend | dong97338@gmail.com | <a href="https://github.com/dong97338" target="_blank"><img src="https://img.shields.io/badge/dong97338-181717?style=flat-square&logo=github&logoColor=white"/></a> |
-| 이준희 |  | 2june233@gmail.com | <a href="https://github.com/2june233" target="_blank"><img src="https://img.shields.io/badge/2june233-181717?style=flat-square&logo=github&logoColor=white"/></a> |
+| 이준희 | 기획/디자인 | 2june233@gmail.com | <a href="https://github.com/2june233" target="_blank"><img src="https://img.shields.io/badge/2june233-181717?style=flat-square&logo=github&logoColor=white"/></a> |
 
 - 소스코드 버전 관리 : `Github`
 - 문서, 회의록 관리 : `Notion`
