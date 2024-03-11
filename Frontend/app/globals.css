@@ -1,0 +1,59 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 200, 200, 220;
+  --background-end-rgb: 255, 255, 255;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: 255, 255, 255;
+    --background-start-rgb: 0, 0, 0;
+    --background-end-rgb: 0, 0, 0;
+  }
+}
+
+
+body {
+  color: rgb(var(--foreground-rgb));
+  /* background: conic-gradient(from 180deg at 50% 50%, #e66465, #9198e5); */
+  background: linear-gradient(to bottom,
+	transparent,
+	rgb(var(--background-end-rgb))) rgb(var(--background-start-rgb));
+  overflow: hidden;
+}
+
+@layer utilities {
+  .glass {
+    --b: 2px;
+    --r: 24px;
+    font-size: 25px;
+    border: none;
+    padding: 10px 20px;
+    position: relative;
+    background: linear-gradient(135deg, rgb(255 255 255/0%), rgb(255 255 255/20%));
+    border-radius: var(--r);
+  }
+
+  .glass::before {
+    z-index: -1;
+    content: '';
+    position: absolute;
+    inset: calc(-1*var(--b));
+    padding: var(--b);
+    border-radius: calc(var(--b) + var(--r));
+    background: linear-gradient(135deg, rgb(228, 228, 228), rgb(136, 136, 136));
+    opacity: 0.5;
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+  }
+  /* .card .overlay { overflow: hidden; } */
+
+  .text-balance {
+    text-wrap: balance;
+  }
+}
