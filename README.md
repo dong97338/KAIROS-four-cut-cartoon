@@ -35,12 +35,9 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 - `Next.js`
 - `tailwindCSS`
 
-### AI(Machine Learning)
-
-- `Pytorch`
-
 ### CI/CD
 
+- `Vercel`
 - `Git`
 
 ## Team Info 팀 정보
